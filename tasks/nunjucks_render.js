@@ -85,11 +85,8 @@ module.exports = function gruntTask(grunt) {
             fopts = lib.merge(opts, fopts);
 
             // prepare data
-            var data = lib.parseData((file.data !== undefined) ? grunt.file.expand(file.data) : undefined);
-            data = lib.merge(lib.parseData(opts.data), data);
-            if (opts.processData) {
-                data = opts.processData(data);
-            }
+			var data = opts.data;
+            data = (file.data !== undefined) ? file.data : data;
             
             // re-organize strings following the strAdd option
             file.str            = nlib.isArray(file.str || []) ? (file.str || []) : [file.str];
