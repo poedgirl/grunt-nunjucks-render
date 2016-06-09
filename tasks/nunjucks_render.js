@@ -104,6 +104,8 @@ module.exports = function gruntTask(grunt) {
                 }
             }
 
+            data.filename = file.src[0].replace(file.orig.cwd).replace(file.orig.ext);
+
             // show info on debug
             if (grunt.option('debug')) {
                 grunt.log.writeflags(data, 'Parsing data');
