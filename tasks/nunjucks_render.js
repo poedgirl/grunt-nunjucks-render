@@ -42,13 +42,13 @@ module.exports = function gruntTask(grunt) {
             strAdd:         'prepend',
             strSeparator:   "\n"
         });
-        
+
         // be sure to have extensions as an array with leading dot
         opts.extensions = nlib.isArray(opts.extensions) ? opts.extensions : [opts.extensions];
         for (var i in opts.extensions) {
             opts.extensions[i] = lib.dotExtension(opts.extensions[i]);
         }
-        
+
         // be sure to have baseDir with its trailing slash
         if (opts.baseDir) {
             opts.baseDir = lib.slashPath(opts.baseDir);
@@ -68,7 +68,7 @@ module.exports = function gruntTask(grunt) {
         });
         var env_opts = opts.env ? [opts.env, fileLoader] : [fileLoader];
         opts.env = new nunjucks.Environment(env_opts);
-        
+
         // add the date fileter to nunjucks env
         opts.env.addFilter('date', dateFilter);
 
@@ -87,7 +87,7 @@ module.exports = function gruntTask(grunt) {
             // prepare data
 			var data = opts.data;
             data = (file.data !== undefined) ? file.data : data;
-            
+
             // re-organize strings following the strAdd option
             file.str            = nlib.isArray(file.str || []) ? (file.str || []) : [file.str];
             file.str_prepend    = nlib.isArray(file.str_prepend || []) ? (file.str_prepend || []) : [file.str_prepend];
@@ -104,7 +104,7 @@ module.exports = function gruntTask(grunt) {
                 }
             }
 
-            data.filename = file.src[0].replace(file.orig.cwd).replace(file.orig.ext);
+            data.filename = file.src[0].replace(file.orig.cwd, '').replace(file.orig.ext, '');
 
             // show info on debug
             if (grunt.option('debug')) {
@@ -127,7 +127,7 @@ module.exports = function gruntTask(grunt) {
                     .join(opts.strSeparator)
                     + opts.strSeparator;
             }
-            
+
             // concat specified files
             if (file.src) {
                 result += file.src
@@ -155,7 +155,7 @@ module.exports = function gruntTask(grunt) {
                     })
                     .join(opts.strSeparator);
             }
-            
+
             // write the destination file
             grunt.file.write(file.dest, result);
 
